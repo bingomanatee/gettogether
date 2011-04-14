@@ -1,0 +1,296 @@
+/* 
+    Document   : base
+    Created on : Apr 13, 2011, 10:32:11 AM
+    Author     : bingomanatee
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+html {
+    padding: 0.5em;
+    background-color: rgb(102,0,25);
+    font-family: Geneva, Arial, sans-serif;
+    color: white;
+}
+
+a {
+    color: rgb(100, 255, 255);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: rgb(255, 0, 255);
+}
+
+content {
+    float: left;
+    width: 75%;
+    padding: 1.5em;
+}
+
+navigation {
+    color: rgb(200, 200, 200);
+    float: left;
+    width: 15%;
+    background-color: rgba(255, 0, 255 ,0.25);
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    font-size: 80%;
+    padding: 1em;
+    margin-left: 1.5em;
+
+}
+
+navigation a {
+    display: block;
+    color: black;
+}
+
+navigation a:hover {
+    color: rgb(0, 0, 200);
+}
+
+#message {
+    background-color: rgba(0, 255, 255, 0.8);
+    color: black;
+    padding: 1em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    box-shadow: 0.5em 0.5em 0.25em rgba(0, 100, 100, 0.25);
+}
+
+#err {
+    background-color: rgba(255, 100, 0, 0.8);
+    color: black;
+    padding: 1em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    box-shadow: 0.5em 0.5em 0.25em rgba(0, 100, 100, 0.25);
+}
+
+#main {
+    background-color: rgba(255, 0, 255, 0.5);
+    margin: 0.5em 0em;
+    padding: 0.25em;
+}
+
+#section{
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0.25em;
+    padding: 0.25em;
+}
+
+form h2 {
+    color: rgb(225, 225, 225);
+    margin: 0px;
+}
+
+form table {
+    background-color: transparent;
+}
+form td,
+form th,
+td, th {
+    text-align: left;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+table.layout td,
+table.layout th {
+    vertical-align :top;
+}
+
+table.list th {
+    font-weight: bold;
+    color: white;
+    font-size: 100%;
+    padding: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+}
+
+table.list td.button {
+    background-color: rgb(255, 255, 102);
+    font-weight: bold
+}
+table.list td.button:hover {
+    background-color: rgb(255, 255, 0);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+table.list td {
+    background-color: rgba(255, 255, 255,0.5);
+    color: black;
+    font-size: 100%;
+    padding: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+}
+
+table.list tr {
+    margin: 1px;
+}
+
+table.list tr:odd td {
+    background-color: yellow
+}
+
+table.list {
+    background-color: rgba(0, 0, 0, 0.5);
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    font-size: 75%;
+}
+
+h1, h2, h3, h4, h5 {
+
+    font-family: Georgia, Bookman, Times New Roman, serif;
+    font-weight: bold;
+    color: rgba(255, 225, 100, 1);
+    font-size: 250%;
+    padding: 0.25em 0em;
+    margin-bottom: 0.5em;
+    text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+h2, h3, h4, h5 {
+    font-family: Helvetica, Geneva, Arial, sans-serif;
+    font-size: 180%;
+    color: red;
+    text-shadow: none;
+}
+
+h3, h4, h5 {
+    font-size: 150%;
+}
+
+form {
+    background-color: rgba(255, 0, 0, 0.25);
+    margin: 0.5em;
+    padding: 1em;
+
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+
+form table {
+    width: 100%;
+    border: none;
+}
+
+form label {
+    display: block;
+    padding: 0.25px;
+    margin: 0.25em;
+    color: black;
+    margin-right: 1em;
+    text-align: right;
+}
+
+form input {
+    background-color: white;
+    border: 1px solid rgb(200, 200, 100);
+    padding: 0.25em;
+    margin: 0.25em;
+    color: black;
+    width: 100%;
+    box-shadow: 0.5em 0.5em 0.25em rgba(0, 0, 100, 0.25);
+}
+
+form input.button {
+
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    border: none;
+    font-weight: bold;
+    color: rgb(0, 0, 100);
+    width: auto;
+    padding: 0.25em 0.5em;
+    background-color: rgb(180, 180, 180);
+}
+
+input.radio,
+input.checkbox {
+    width: auto
+}
+
+table.acl th,
+table.acl td {
+    color: black;
+    width: 4em;
+    text-align: center;
+    vertical-align: middle;
+    border: 0.5em solid black;
+    -moz-border-radius: 1.5em;
+    -webkit-border-radius: 1.5em;
+    font-weight: bold;
+}
+table.acl th {
+    color: white;
+}
+
+table.acl td.yes {
+    background-color: green;
+}
+table.acl td.no {
+    background-color: red;
+}
+table.acl td.null {
+    background-color: grey;
+}
+
+table.acl {
+    background-color: black;
+    -moz-border-radius: 1.5em;
+    -webkit-border-radius: 1.5em;
+}
+
+
+table.ticket th {
+    font-weight: bold;
+    color: black;
+    font-size: 100%;
+    padding: 0.5em;
+    text-align: right;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+}
+
+table.ticket td.button {
+    background-color: rgb(255, 255, 102);
+    font-weight: bold
+}
+table.ticket td.button:hover {
+    background-color: rgb(255, 255, 0);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+table.ticket td {
+    background-color: rgba(255, 255, 255,0.5);
+    color: black;
+    font-size: 100%;
+    padding: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+}
+
+table.ticket {
+    background-color: rgba(225, 255, 200, 0.75);
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    font-size: 75%;
+    margin: 1em 0.5em;
+}

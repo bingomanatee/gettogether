@@ -1,0 +1,38 @@
+
+<form method="post" action="/member/join">
+<h2>Join us</h2>
+<table>
+    <tr>
+        <th><label>Real Name</label></th>
+        <td><input type="text"      name="member[name]"         value="<?php echo empty($this->name) ? '' : $this->name ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Public Name(alias)</label></th>
+        <td><input type="text"      name="member[alias]"         value="<?php echo empty($this->alias) ? '' : $this->alias ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Password</label></th>
+        <td><input type="password"  name="member[password][]"   value="" /></td>
+    </tr>
+    <tr>
+        <th><label>Password (again)</label></th>
+        <td><input type="password"  name="member[password][]"   value="" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Email Address</label></th>
+        <td><input type="text"      name="member[email][]"    value="<?php echo empty($this->email) ? '' : $this->email ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Email Address (again)</label></th>
+        <td><input type="text"      name="member[email][]"    value="<?php echo empty($this->email) ? '' : $this->email ?>" /></td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: center"><input type="submit" class="button submit" value="Join GetTogether" /></td>
+    </tr>
+</table>
+</form>

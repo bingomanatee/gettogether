@@ -1,0 +1,32 @@
+
+
+<form method="post" action="/member/acl" style="width: 40em">
+<h2>Grant Action To Role</h2>
+<table>
+    <tr>
+        <th><label>Role</label></th>
+        <td><input type="text" name="acl[role]" value="" />
+        <br />
+        <input type="checkbox" name="acl[all_roles]" class="checkbox" />All Roles</td>
+    </tr>
+
+    <tr>
+        <th><label>Action</label></th>
+        <td><input type="text" name="acl[action]" value="" />
+        <br />
+        <input type="checkbox" name="acl[all_actions]" class="checkbox" />All Actions</td>
+    </tr>
+
+    <tr>
+        <th><label>Grant</label></th>
+        <td>
+            <input type="radio" name="acl[can]" class="checkbox" checked="checked" value="1" />Allow<br />
+        <input type="radio" name="acl[can]" class="checkbox"                       value="0" />Prevent
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: center"><input type="submit" class="button submit"  value="Grant Action" /></td>
+    </tr>
+</table>
+</form>

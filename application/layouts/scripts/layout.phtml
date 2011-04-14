@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Get Together</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
+        <link rel="stylesheet" type="text/css"
+              href="<?php echo $this->baseUrl('css/base.css'); ?>" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+    </head>
+
+    <body>
+        <content>
+            <?php if (!empty($this->message)){ ?>
+            <div id="message">
+                <?php echo $this->message ?>
+            </div>
+            <?php } // empty message ?>
+            <?php if (!empty($this->err)){ ?>
+            <div id="err">
+                <?php if (is_scalar($this->err)) {
+                    echo $this->err;
+                } elseif(is_array($this->err)) {
+                    foreach($this->err as $e){ ?>
+                <div class="err">
+                    <?php $e['message'] ?>
+                </div>
+                <?php }} ?>
+            </div>
+            <?php } // empty err ?>
+            <?php echo $this->layout()->content ?>
+
+            <hr />
+            <p>Environment: <?php echo APPLICATION_ENV ?></p>
+        </content>
+
+        <?php echo $this->partial('layout/nav.phtml', array('section_nav' => $this->section_nav)) ?>
+
+
+    </body>
+</html>

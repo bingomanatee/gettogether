@@ -1,0 +1,53 @@
+<?php
+    $grant_model = new Gettogether_Model_Grants();
+
+    $roles = $grant_model->roles();
+?>
+<form method="post" action="/member/edit">
+<h2>Edit Member</h2>
+<table>
+    <tr>
+        <th><label>Real Name</label></th>
+        <td><input type="text"      name="member[name]"         value="<?php echo empty($this->name) ? '' : $this->name ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Public Name(alias)</label></th>
+        <td><input type="text"      name="member[alias]"         value="<?php echo empty($this->alias) ? '' : $this->alias ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Password</label></th>
+        <td><input type="password"  name="member[password][]"   value="" /></td>
+    </tr>
+    <tr>
+        <th><label>Password (again)</label></th>
+        <td><input type="password"  name="member[password][]"   value="" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Email Address</label></th>
+        <td><input type="text"      name="member[email][]"    value="" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Email Address (again)</label></th>
+        <td><input type="text"      name="member[email][]"    value="" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Roles</label></th>
+        <td>
+            <?php foreach($roles as $role) if ($role) { ?>
+            <input type="checkbox" class="checkbox" name="member[roles][<?php echo $role ?>]" value="1"
+            <?php if (in_array($role, $this->roles)) echo ' checked="checked" ' ?>
+                   /> <?php echo $role ?><br />
+            <?php } ?>
+        </td>
+
+    <tr>
+        <td colspan="2" style="text-align: center"><input type="submit" class="button submit" value="Update Member" /></td>
+    </tr>
+</table>
+    <input type="hidden" name="id" value="<?php echo $this->id ?>" />
+</form>

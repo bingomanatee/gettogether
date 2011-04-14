@@ -1,0 +1,9 @@
+<h1>Edit Member &quot;<?php echo $this->member->name ?>&quot;
+    (<?php echo $this->member->alias ?>)</h1>
+
+<h3>Data </h3>
+<pre>
+<?php print_r($this->data) ?>
+</pre>
+
+<?php echo $this->partial('forms/edit_member.phtml', $this->data) ?>

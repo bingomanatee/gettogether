@@ -1,0 +1,19 @@
+<h1>Groups</h1>
+
+<table class="list">
+
+    <tr>
+        <th>Name</th>
+    </tr>
+    <?php foreach($this->groups as $group) { ?>
+
+    <tr>
+        <td><?php echo $group['name'] ?>
+        </td>
+    </tr>
+    <?php } ?>
+
+</table>
+<hr />
+
+<?php echo $this->partial('forms/add_group.phtml', $this->values) ?>

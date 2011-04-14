@@ -1,0 +1,29 @@
+
+<form method="post" action="/group/add">
+<h2>Add Group</h2>
+<table>
+    <tr>
+        <th><label>Name</label></th>
+        <td><input type="text" name="name" value="<?php echo empty($this->name) ? '' : $this->name ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>City</label></th>
+        <td><input type="text" name="city" value="<?php echo empty($this->city) ? '' : $this->city ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>State</label></th>
+        <td><input type="text" name="state" value="<?php echo empty($this->state) ? '' : $this->state ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>description</label></th>
+            <td><textarea rows="10" cols="50" name="description"><?php echo empty($this->description) ? '' : $this->description ?></textarea></td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: center"><input type="submit" class="button submit"  value="Add Group" /></td>
+    </tr>
+</table>
+</form>

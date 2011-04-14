@@ -1,0 +1,33 @@
+<h1>Members</h1>
+
+<table class="list">
+    <tr>
+        <th>Alias</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach($this->members as $member) { ?>
+    <tr>
+        <td><?php echo $member['alias'] ?></td>
+        <td><?php echo $member['name'] ?></td>
+        <td><?php echo $member['email'] ?></td>
+        <td class="button" 
+            onClick="document.location='<?php echo $this->baseUrl('/member/edit/id/' . $member->id) ?>'">
+        Edit</td>
+    </tr>
+    <?php } ?>
+</table>
+
+<?php   $ds = Zend_Registry::get('gt_session');
+    if (!$ds->member) { ?>
+<table class="layout" width="100%">
+    <tr>
+        <td width="50%"><?php echo $this->partial('forms/signin.phtml'); ?></td>
+        <td width="50%"><?php echo $this->partial('forms/join.phtml') ?></td>
+    </tr>
+</table>
+<?php
+    } else {
+        echo $this->partial('tickets/member.phtml', array('member' => $ds->member));
+    }

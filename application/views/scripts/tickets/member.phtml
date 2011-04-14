@@ -1,0 +1,26 @@
+<?php
+$role = new Gettogether_Model_Roles();
+
+$actions = $role->member_actions($this->member->id);
+
+?>
+<table class="ticket">
+    <tr>
+        <th>Name</th>
+        <td><?php echo $this->member->name ?></td>
+    </tr>
+    <tr>
+        <th>Alias</th>
+        <td><?php echo $this->member->alias ?></td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td><?php echo $this->member->email ?></td>
+    </tr>
+
+    <tr>
+        <th>Actions</th>
+        <td><?php  echo join(', ', array_keys($actions)) ?>
+        </td>
+    </tr>
+</table>

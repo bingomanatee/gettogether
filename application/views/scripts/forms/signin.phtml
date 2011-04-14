@@ -1,0 +1,19 @@
+
+<form method="post" action="/member/signin">
+<h2>Log In</h2>
+<table>
+    <tr>
+        <th><label>Member Name</label></th>
+        <td><input type="text" name="member[alias]" value="<?php echo empty($this->alias) ? '' : $this->name ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>password</label></th>
+        <td><input type="password" name="member[password]" value="<?php echo empty($this->city) ? '' : $this->city ?>" /></td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: center"><input type="submit" class="button submit"  value="Log In" /></td>
+    </tr>
+</table>
+</form>
