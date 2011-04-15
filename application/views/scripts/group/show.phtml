@@ -13,6 +13,17 @@ if (empty($this->ticket)) {
         </ul>
     </div>
 
+<?php
+    if ($this->member_group){ ?>
+<p>You are a member of this group</p>
+<?php
+} else { ?>
+<div id="inner">
+<p><a href="<?php echo $this->baseUrl('/group/join/id/' . $this->group->id) ?>"
+      class="button submit">Join this group!</a></p>
+</div>
+<?php } ?>
+      
     <script language="javascript">
         $(function() {
             $( "#tabs" ).tabs();
@@ -20,6 +31,7 @@ if (empty($this->ticket)) {
     </script>
 <?php
 } else {
-
+?>
+<?php
     echo $this->partial('tickets/group.phtml', array('group' => $this->group));
 }

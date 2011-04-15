@@ -28,7 +28,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
 
     public function _initSession() {
-        Zend_Registry::set('gt_session', new Zend_Session_Namespace('gt'));
+        $gt = new Zend_Session_Namespace('gt');
+        Zend_Registry::set('gt_session', $gt);
+
+        if ($gt->member){
+            Zend_Registry::set('user', $gt->member);
+        } else {
+            Zend_Registry::set('user', FALSE);
+        }
     }
 
     public function _initCache() {

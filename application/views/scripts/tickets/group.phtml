@@ -7,4 +7,27 @@
         <th>Description</th>
         <td><?php echo $this->group->description ?></td>
     </tr>
+    <?php
+    if ($user = Zend_Registry::get('user')){
+        $join_model = new Gettogether_Model_Member_Groups();
+        $find = array('member' => $user->id, '`group`' => $this->group->id);
+        if ($join = $join_model->find_one($find)){ ?>
+    <tr><td colspan="2"><b>You are a member of this group</b></td></tr>
+    <?php } else {
+        ?>
+    <tr><td colspan="2">
+            <a href="<?php
+            echo $this->baseUrl('/group/join/id/' . $this->group->id)
+       ?>">Join This Group!</a>
+        </td>
+    </tr>
+    <?php } ?>
+    <?php } else { // can't join if not logged in '?>
+
+    <?php
+    }
+    ?>
+    <tr>
+        <th>
+    </tr>
 </table>

@@ -32,12 +32,27 @@ a:hover {
     color: rgb(255, 0, 255);
 }
 
+.button {
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    border: none;
+    font-weight: bold;
+    color: rgb(0, 0, 100);
+    width: auto;
+    padding: 0.25em 0.5em;
+    background-color: rgb(180, 180, 180);
+}
+
 content {
     float: left;
     width: 75%;
     padding-top: 0em;
     background-color: rgb(255, 204, 225);
     color: black;
+}
+
+content #inner {
+    padding: 1.5em;
 }
 
 content td, content th, content p {
