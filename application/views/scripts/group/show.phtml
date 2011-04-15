@@ -1,9 +1,25 @@
-<h1>Group &quot;<?php echo $this->group->name ?>&quot</h1>
+<?php
+if (empty($this->ticket)) {
+    echo '<h1>Group&quot;', $this->group->name, '&quot;</h1>';
+?>
+    
 
-<p>
-    <?php echo $this->group->description ?>
-</p>
+    <div id="tabs">
+        <ul>
+            <li><a href="<?php echo $this->baseURL('/group/show/id/' . $this->group->id . '/ticket/1') ?>">Home</a></li>
+            <li><a href="<?php echo $this->baseURL('/group/events/id/' . $this->group->id . '/ticket/1') ?>">Events</a></li>
+            <li><a href="<?php echo $this->baseURL('/group/addevent/id/' . $this->group->id . '/ticket/1') ?>">Add Event</a></li>
+            <li><a href="<?php echo $this->baseURL('/group/members/id/' . $this->group->id . '/ticket/1') ?>">Members</a></li>
+        </ul>
+    </div>
 
-<hr />
+    <script language="javascript">
+        $(function() {
+            $( "#tabs" ).tabs();
+        });
+    </script>
+<?php
+} else {
 
-<p><a href="/group/join/id/<?php $this->group->id ?>">Join This Group!</a></p>
+    echo $this->partial('tickets/group.phtml', array('group' => $this->group));
+}

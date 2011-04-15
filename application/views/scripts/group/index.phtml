@@ -1,19 +1,17 @@
 <h1>Groups</h1>
 
-<table class="list">
+<div id="tabs">
+    <ul>
+        <li><a href="<?php echo $this->baseURL('/group/list/ticket/1') ?>">All Groups</a></li>
+        <li><a href="<?php echo $this->baseURL('/group/my/ticket/1') ?>">My Groups</a></li>
+        <li><a href="<?php echo $this->baseURL('/group/local/ticket/1') ?>">Local Groups</a></li>
+        <li><a href="<?php echo $this->baseURL('/group/add/ticket/1') ?>">Add Group</a></li>
+    </ul>
+</div>
 
-    <tr>
-        <th>Name</th>
-    </tr>
-    <?php foreach($this->groups as $group) { ?>
+<script language="javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
 
-    <tr>
-        <td><?php echo $group['name'] ?>
-        </td>
-    </tr>
-    <?php } ?>
-
-</table>
-<hr />
-
-<?php echo $this->partial('forms/add_group.phtml', $this->values) ?>
+</script>

@@ -99,7 +99,7 @@ abstract class Gettogether_Model_Abstract implements Gettogether_Model_IF {
         return $this->table()->fetchAll($select);
     }
 
-    public function all(array $pCrit = NULL) {
+    public function all(array $pCrit = array()) {
         $select = $this->table()->select();
         
         $this->_add_sort($select, $pCrit);

@@ -16,7 +16,7 @@ root {
 }
 
 html {
-    padding: 0.5em;
+    padding: 0em;
     background-color: rgb(102,0,25);
     font-family: Geneva, Arial, sans-serif;
     color: white;
@@ -35,7 +35,17 @@ a:hover {
 content {
     float: left;
     width: 75%;
-    padding: 1.5em;
+    padding-top: 0em;
+    background-color: rgb(255, 204, 225);
+    color: black;
+}
+
+content td, content th, content p {
+    color: black;
+}
+
+content a {
+    color: rgb(100, 25, 204);
 }
 
 navigation {
@@ -155,14 +165,17 @@ table.list {
 }
 
 h1, h2, h3, h4, h5 {
-
     font-family: Georgia, Bookman, Times New Roman, serif;
     font-weight: bold;
-    color: rgba(255, 225, 100, 1);
+    color: rgba(50, 0, 100, 1);
     font-size: 250%;
     padding: 0.25em 0em;
     margin-bottom: 0.5em;
-    text-shadow: 0.1em 0.1em 0.2em black;
+    text-shadow: 0em 0em 0.2em white;
+}
+
+h1 {
+    text-align: center
 }
 
 h2, h3, h4, h5 {
@@ -183,6 +196,8 @@ form {
 
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
+
+    width: 30em;
 }
 
 form table {
@@ -199,7 +214,12 @@ form label {
     text-align: right;
 }
 
-form input {
+form table th {
+    width: 8em;
+}
+
+form input,
+form textarea{
     background-color: white;
     border: 1px solid rgb(200, 200, 100);
     padding: 0.25em;
@@ -226,19 +246,34 @@ input.checkbox {
     width: auto
 }
 
+table.acl {
+    font-size: 80%;
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+}
+
+table.acl thead th {
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    text-align: center;
+    background-color: black;
+    color: rgb(200, 200, 200);
+}
+
 table.acl th,
 table.acl td {
-    color: black;
+    color: rgb(50, 50, 50);
     width: 4em;
     text-align: center;
     vertical-align: middle;
-    border: 0.5em solid black;
-    -moz-border-radius: 1.5em;
-    -webkit-border-radius: 1.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
     font-weight: bold;
+    padding: 1px;
 }
 table.acl th {
     color: white;
+    text-align: left;
 }
 
 table.acl td.yes {
@@ -293,4 +328,12 @@ table.ticket {
     -webkit-border-radius: 0.5em;
     font-size: 75%;
     margin: 1em 0.5em;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 2em;
 }

@@ -1,39 +1,52 @@
 <html>
     <head>
         <title>Get Together</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
+        <link rel="stylesheet"
+              href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
         <link rel="stylesheet" type="text/css"
-              href="<?php echo $this->baseUrl('css/base.css'); ?>" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+              href="<?php echo $this->baseUrl('/css/base.css'); ?>" />
+        <link rel="stylesheet" type="text/css"
+              href="<?php echo $this->baseUrl('/css/blitzer/jquery-ui-1.8.11.custom.css'); ?>" />
+        <script src="<?php echo $this->baseUrl("/js/jquery-1.5.1.min.js") ?>"></script>
+        <script src="<?php echo $this->baseUrl("/js/jquery-ui-1.8.11.custom.min.js") ?>"></script>
     </head>
 
     <body>
-        <content>
-            <?php if (!empty($this->message)){ ?>
+    <content>
+        <?php
+        error_log(get_class($this));
+        error_log('message: ' . $this->message);
+     //   error_log(print_r($this, 1));
+        
+        if (!empty($this->message)) {
+ ?>
             <div id="message">
-                <?php echo $this->message ?>
-            </div>
-            <?php } // empty message ?>
-            <?php if (!empty($this->err)){ ?>
+<?php echo $this->message ?>
+        </div>
+        <?php } // empty message ?>
+<?php if (!empty($this->err)) { ?>
             <div id="err">
-                <?php if (is_scalar($this->err)) {
-                    echo $this->err;
-                } elseif(is_array($this->err)) {
-                    foreach($this->err as $e){ ?>
+            <?php
+            if (is_scalar($this->err)) {
+                echo $this->err;
+            } elseif (is_array($this->err)) {
+                foreach ($this->err as $e) {
+ ?>
                 <div class="err">
-                    <?php $e['message'] ?>
-                </div>
-                <?php }} ?>
+<?php echo (is_array($e)) ? $e['message'] : $e ?>
+                    </div>
+        <?php }
+            } ?>
             </div>
-            <?php } // empty err ?>
-            <?php echo $this->layout()->content ?>
+<?php } // empty err  ?>
+<?php echo $this->layout()->content ?>
 
-            <hr />
-            <p>Environment: <?php echo APPLICATION_ENV ?></p>
+        <hr />
+        <p>Environment: <?php echo APPLICATION_ENV ?></p>
         </content>
 
-        <?php echo $this->partial('layout/nav.phtml', array('section_nav' => $this->section_nav)) ?>
+<?php echo $this->partial('layout/nav.phtml', array('section_nav' => $this->section_nav)) ?>
 
 
-    </body>
+</body>
 </html>

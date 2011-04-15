@@ -8,29 +8,32 @@ class MemberController extends Zend_Controller_Action {
     private $_member_model;
     /**
      *
+     * @var Gettogether_Model_Member_Roles
+     */
+    private $_member_role_model;
+    /**
+     *
      * @var Zend_Session
      */
     private $_session;
 
-    private $_role_model;
-
     public function init() {
         $this->_member_model = new Gettogether_Model_Members();
-        $this->_role_model   = new Gettogether_Model_Roles();
-        
+        $this->_member_role_model = new Gettogether_Model_Member_Roles();
+
         $this->_session = Zend_Registry::get('gt_session');
 
         $this->view->section_nav = array();
-        if ($this->_role_model->active_member_can('member_grant_change')){
-            $this->view->section_nav['Grants'] = '/member/acl';
-        }
 
-        $this->view->message = $this->_getParam('message');
-        $this->view->err = $this->_getParam('err');
+        $this->view->section_nav['Grants'] = '/role';
     }
 
     public function indexAction() {
-        $this->view->members = $this->_member_model->all(array('sort' => 'alias'));
+        if ($this->_member_role_model->active_member_can('view_members')) {
+            $this->view->members = $this->_member_model->all(array('sort' => 'alias'));
+        } else {
+            $this->view->members = FALSE;
+        }
     }
 
     public function joinAction() {
@@ -48,7 +51,12 @@ class MemberController extends Zend_Controller_Action {
             if ($data['email'][0] !== $data['email'][1]) {
                 $errs[] = array('field' => 'email', 'message' => 'Emails do not match');
             } else {
-                $data['email'] = $data['email'][0];
+                $data['email'] = $email = $data['email'][0];
+
+                $old_email = $this->_member_model->find_one(array('email' => $email));
+                if ($old_email) {
+                    $errs[] = array('field' => 'email', 'message' => "Email already in use");
+                }
             }
 
             if (count($errs)) {
@@ -133,7 +141,7 @@ class MemberController extends Zend_Controller_Action {
         $role_model = new Gettogether_Model_Roles();
 
         $this->view->member = $member;
-        error_log(__METHOD__ . ':: member = ' . print_r($member, 1));
+        //  error_log(__METHOD__ . ':: member = ' . print_r($member, 1));
         $data = $member->toArray();
         $data['actions'] = $role_model->member_actions($member->id);
         $data['roles'] = $role_model->member_roles($member->id);
@@ -149,59 +157,6 @@ class MemberController extends Zend_Controller_Action {
 
     public function showAction() {
         $this->view->member = $this->_member_model->get($this->_getParam('id'));
-    }
-
-    public function aclAction() {
-        if (!$this->_role_model->active_member_can('member_grant_change')){
-           return $this->_forward('index', 'index', null, array('err' => 'You don\'t have permission to edit grants'));
-        }
-
-        $grants_model = new Gettogether_Model_Grants();
-
-        if ($this->getRequest()->isPost()) {
-            $data = $this->_getParam('acl');
-            $can = $data['can'];
-            $action = $data['action'];
-
-            if (!empty($data['all_roles'])) {
-                if ($action) {
-                    foreach ($grants_model->roles() as $role) {
-                        $grants_model->set_grant($role, $action, $can);
-                    }
-                }
-            } else if (!empty($data['all_actions'])) {
-                foreach ($grants_Model->actions() as $action) {
-                    $grants_model->set_grant($role, $action, $can);
-                }
-            } else {
-                $grants_model->set_grant($role, $action, $can);
-            }
-        }
-
-        $grants = $grants_model->all(array('sort' => array('role', 'action')));
-
-        $this->view->roles = $roles = $grants_model->roles();
-        $this->view->actions = $actions = $grants_model->actions();
-        $gr = array();
-        foreach ($roles as $role) {
-            $gr[$role] = array();
-            foreach ($actions as $action
-
-                )$gr[$role][$action] = NULL;
-        }
-
-        foreach ($grants as $grant) {
-            $gr[$grant->role][$grant->action] = $grant->can;
-        }
-
-        ksort($gr);
-
-        $this->view->grants = $gr;
-
-        $this->view->update = $update = $this->_getParam('update');
-        if ($update) {
-            $this->_helper->layout->disableLayout();
-        }
     }
 
 }

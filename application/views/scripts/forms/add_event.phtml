@@ -1,0 +1,43 @@
+<form method="post" action="/event/add">
+    <h2>Add Event to group &quot<?php echo $this->group->name ?>&quot;</h2>
+    <table>
+        <tr>
+            <th><label>Name</label></th>
+            <td><input type="text" name="event[name]" value="<?php echo empty($this->name) ? '' : $this->name ?>" /></td>
+        </tr>
+
+        <tr>
+            <th><label>Description</label></th>
+            <td><textarea rows="10" cols="50" name="event[description]"><?php echo empty($this->description) ? '' : $this->description ?></textarea></td>
+        </tr>
+
+        <tr><th colspan="2"><h3>Location</h3></th></tr>
+
+        <tr>
+            <th><label>Address</label></th>
+            <td><textarea name="event[address]"><?php echo empty($this->city) ? '' : $this->city ?></textarea></td>
+        </tr>
+
+        <tr>
+            <th><label>City</label></th>
+            <td><input type="text" name="event[city]" value="<?php echo empty($this->city) ? '' : $this->city ?>" /></td>
+        </tr>
+
+        <tr>
+            <th><label>State </label></th>
+            <td><input type="text" name="event[state]" value="<?php echo empty($this->state) ? '' : $this->state ?>" />
+                <br /><small>(2 letter code)</small></td>
+        </tr>
+
+        <tr>
+            <th><label>Zip</label></th>
+            <td><input type="text" name="event[zip]" value="<?php echo empty($this->zip) ? '' : $this->zip ?>" /></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align: center"><input type="submit" class="button submit"  value="Add Evvent" /></td>
+        </tr>
+    </table>
+    <input type="hidden" name="event[group]" value="<?php echo $this->group->id ?>" />
+    <p>Your event may or may not appear immediately to the membership depending on this groups' settings</p>
+</form>

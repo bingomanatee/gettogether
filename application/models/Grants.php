@@ -9,72 +9,48 @@ class Gettogether_Model_Grants extends Gettogether_Model_Abstract implements Get
 CREATE TABLE  `role_grants` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `role` VARCHAR( 100 ) NOT NULL ,
-`action` VARCHAR( 100 ) NOT NULL ,
+`task` VARCHAR( 100 ) NOT NULL ,
 `can` TINYINT NOT NULL DEFAULT  '1'
 ) ENGINE = MYISAM ;
 SQL;
         $this->table()->getAdapter()->query($sql);
     }
 
-    public function roles() {
-        $select = $this->table()->select(TRUE)->columns('role')->distinct();
-        $rows = $this->table()->fetchAll($select);
-        $out = array();
-
-        foreach ($rows as $row) {
-            $out[] = $row->role;
-        }
-
-        //      error_log(__METHOD__ . ':: roles = ' . print_r($out, 1));
-
-        return array_unique($out);
-    }
-
-    public function actions() {
-        $select = $this->table()->select(TRUE)->columns('action')->distinct();
-        $rows = $this->table()->fetchAll($select);
-        $out = array();
-
-        foreach ($rows as $row) {
-            $out[] = $row->action;
-        }
-
-        //    error_log(__METHOD__ . ':: roles = ' . print_r($out, 1));
-
-        return array_unique($out);
-    }
-
-    public function role_actions($role) {
+    public function role_tasks($role) {
         if ($role) {
-            $out = $this->role_actions('');
+            $out = $this->role_tasks('');
             $select = $this->table()->select(TRUE)
                             ->where('role LIKE ?', $role)
                             ->where('can = 1')
-                            ->columns(array('action', 'can'))
+                            ->columns(array('task', 'can'))
                             ->distinct();
             $rows = $this->table()->fetchAll($select);
 
             foreach ($rows as $row) {
-                $out[$row->action] = $row->can;
+                $out[$row->task] = $row->can;
             }
         } else {
             $select = $this->table()->select(TRUE)
                             ->where('role LIKE ?', '')
                             ->where('can = 1')
-                            ->columns(array('action', 'can'))
+                            ->columns(array('task', 'can'))
                             ->distinct();
             $rows = $this->table()->fetchAll($select);
             $out = array();
 
             foreach ($rows as $row) {
-                $out[$row->action] = $row->can;
+                $out[$row->task] = $row->can;
             }
         }
         return $out;
     }
 
-    public function set_grant($role, $action, $can) {
-        $old_grant = $this->find_one(array('role' => $role, 'action' => $action));
+    public function set_grant($role, $task, $can) {
+        if (!$task) throw new Exception(__METHOD__ . ":: no task for role $role/$can");
+        error_log(__METHOD__ . ":: role = $role, task = $task, can = $can");
+        $find = array('role' => $role, 'task' => $task);
+        
+        $old_grant = $this->find_one($find);
         switch ($can) {
             case 'delete':
                 error_log(__METHOD__ . ':: adding null');

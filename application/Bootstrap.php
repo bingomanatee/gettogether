@@ -1,7 +1,6 @@
 <?php
 
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
-{
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
     public function _initConstants() {
         define('DS', DIRECTORY_SEPARATOR);
@@ -12,18 +11,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $frontController = Zend_Controller_Front::getInstance();
         $router = $frontController->getRouter();
         $route = new Zend_Controller_Router_Route_Static('chart.png',
-                array('controller' => 'proj',
-                    'action' => 'chart')
-                );
+                        array('controller' => 'proj',
+                            'action' => 'chart')
+        );
 
         $router->addRoute('chart', $route);
     }
 
     public function _initActionHelpers() {
         $this->bootstrap('constants');
-        $hbp = dirname(__FILE__) . join(DS, array('', 'controllers', 'actionhelpers'));
-     //   error_log(__METHOD__ . ": finding action helpers in $hbp");
-        Zend_Controller_Action_HelperBroker::addPath($hbp, 'ActionHelper');
+        $this->bootstrap('frontController');
+
+        foreach ($this->getOption('actionhelpers') as $helper) {
+            Zend_Controller_Action_HelperBroker::getStaticHelper($helper);
+        }
     }
 
     public function _initSession() {
@@ -33,14 +34,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     public function _initCache() {
         $cache = $this->getOption('cache');
         $cm = new Zend_Cache_Manager();
-        if ($cache ) foreach ($cache as $name => $setting) {
-            $cm->setCacheTemplate($name, $setting);
-        }
+        if ($cache)
+            foreach ($cache as $name => $setting) {
+                $cm->setCacheTemplate($name, $setting);
+            }
 
         Zend_Registry::set('cm', $cm);
         $db_cache = $cm->getCache('db');
         Zend_Db_Table_Abstract::setDefaultMetadataCache($db_cache);
-
     }
 
     public function _initLog() {

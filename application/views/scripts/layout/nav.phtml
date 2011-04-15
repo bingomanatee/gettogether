@@ -2,21 +2,21 @@
 <navigation>
     <a href="/">Home</a>
     <?php
-    $ds = Zend_Registry::get('gt_session');
-    if ($member = $ds->member) {
+    if ($this->user) {
     ?>
-        <p>Logged in as <?php echo $member->alias ?></p>
-        <a href="<?php echo $this->baseUrl('/member/show/id/' . $member->id) ?>">My Account</a>
+        <p>Logged in as <?php echo $this->user->alias ?></p>
+        <a href="<?php echo $this->baseUrl('/member/show/id/' . $this->user->id) ?>">My Account</a>
         <a href="<?php echo $this->baseUrl(); ?>/member/signout">Log out</a>
     <?php } else {
- ?>
+    ?>
         <a href="<?php echo $this->baseUrl(); ?>/member/signin">Sign In </a>
-<?php } ?>
+    <?php } ?>
     <div id="main">
         <a href="<?php echo $this->baseUrl('/group'); ?>">Groups</a>
         <a href="<?php echo $this->baseUrl('/member'); ?>">Members</a>
     </div>
-<?php if ($section_nav = $this->section_nav) { ?>
+    <?php if ($section_nav = $this->section_nav) {
+ ?>
         <div id="section">
 <?php foreach ($section_nav as $label => $link) { ?>
             <a href="<?php echo $this->baseUrl($link) ?>"><?php echo $label ?></a>

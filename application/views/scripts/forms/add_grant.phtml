@@ -1,11 +1,18 @@
-
-
-<form method="post" action="/member/acl" style="width: 40em">
+<?php
+$role_model = new Gettogether_Model_Roles();
+?>
+<form method="post" action="/acl/add" style="width: 40em">
 <h2>Grant Action To Role</h2>
 <table>
     <tr>
         <th><label>Role</label></th>
-        <td><input type="text" name="acl[role]" value="" />
+        <td><select name="acl[role]" >
+                <option value="" <?php if ($this->role == '') echo 'selected="selected" ' ?>  >(Default)</option>
+                <?php foreach($role_model->all() as $role) { ?>
+                <option  <?php if ($this->role == $role->role) echo 'selected="selected" ' ?> value="<?php echo $role->role ?>"><?php echo $role->label ?></option>
+                <?php } ?>
+
+            </select>
         <br />
         <input type="checkbox" name="acl[all_roles]" class="checkbox" />All Roles</td>
     </tr>

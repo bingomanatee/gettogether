@@ -1,0 +1,22 @@
+<h1>Roles, Actions, Grants</h1>
+
+<div id="tabs">
+    <ul>
+        <li><a href="<?php echo $this->baseURL('/role/roles/ticket/1') ?>">Roles</a></li>
+        <li><a href="<?php echo $this->baseURL('/role/tasks/ticket/1') ?>">Tasks</a></li>
+        <li><a href="<?php echo $this->baseURL('/role/acl/ticket/1') ?>">Grants</a></li>
+        <li><a href="<?php echo $this->baseURL('/role/add/ticket/1') ?>">Add Role</a></li>
+    </ul>
+</div>
+
+<script language="javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+        
+    function acl_update(role, task, can){
+        $.post( '<?php echo $this->baseUrl('/role/grant') ?>',
+        {acl: {role: role, task: task, can: can}, ticket: 1}
+        , function(table){$('#ui-tabs-3').html(table)} )
+    }
+</script>

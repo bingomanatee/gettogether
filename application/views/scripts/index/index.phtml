@@ -1,1 +1,15 @@
 <h1>Welcome to GetTogether!</h1>
+<?php if ($this->user) { ?>
+<?php } else { ?>
+    <div id="tabs">
+        <ul>
+            <li><a href="<?php echo $this->baseURL('/member/signin/ticket/1') ?>">Sign In</a></li>
+            <li><a href="<?php echo $this->baseURL('/member/join/ticket/1') ?>">Join Us</a></li>
+        </ul>
+    </div>
+<?php } ?>
+<script language="javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>

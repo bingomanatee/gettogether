@@ -1,0 +1,10 @@
+<?php if (!$this->ticket){ ?>
+<h1>Roles</h1>
+<?php } ?>
+
+<dl>
+    <?php foreach($this->roles as $role){ ?>
+    <dt><?php echo $role->role ?></dt>
+    <dd><?php echo $role->label ?></dd>
+    <?php } ?>
+</dl>

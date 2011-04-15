@@ -5,8 +5,6 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->view->message = $this->_getParam('message');
-        $this->view->err = $this->_getParam('err');
     }
 
     public function indexAction()

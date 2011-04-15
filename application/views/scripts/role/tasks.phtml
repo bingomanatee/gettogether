@@ -1,0 +1,10 @@
+<?php if (!$this->ticket){ ?>
+<h1>Tasks</h1>
+<?php } ?>
+
+<dl>
+    <?php foreach($this->tasks as $task){ ?>
+    <dt><?php echo $task->task ?></dt>
+    <dd><?php echo $task->label ?></dd>
+    <?php } ?>
+</dl>

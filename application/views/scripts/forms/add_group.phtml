@@ -4,22 +4,31 @@
 <table>
     <tr>
         <th><label>Name</label></th>
-        <td><input type="text" name="name" value="<?php echo empty($this->name) ? '' : $this->name ?>" /></td>
-    </tr>
-
-    <tr>
-        <th><label>City</label></th>
-        <td><input type="text" name="city" value="<?php echo empty($this->city) ? '' : $this->city ?>" /></td>
-    </tr>
-
-    <tr>
-        <th><label>State</label></th>
-        <td><input type="text" name="state" value="<?php echo empty($this->state) ? '' : $this->state ?>" /></td>
+        <td><input type="text" name="group[name]" value="<?php echo empty($this->name) ? '' : $this->name ?>" /></td>
     </tr>
 
     <tr>
         <th><label>description</label></th>
-            <td><textarea rows="10" cols="50" name="description"><?php echo empty($this->description) ? '' : $this->description ?></textarea></td>
+            <td><textarea rows="10" cols="50" name="group[description]"><?php echo empty($this->description) ? '' : $this->description ?></textarea></td>
+    </tr>
+
+    <tr>
+        <th colspan="2"><h3>Location</h3></th>
+    </tr>
+
+    <tr>
+        <th><label>City</label></th>
+        <td><input type="text" name="group[city]" value="<?php echo empty($this->city) ? '' : $this->city ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>State</label></th>
+        <td><input type="text" name="group[state]" value="<?php echo empty($this->state) ? '' : $this->state ?>" /></td>
+    </tr>
+
+    <tr>
+        <th><label>Zip Code</label></th>
+        <td><input type="text" name="group[zip]" value="<?php echo empty($this->zip) ? '' : $this->state ?>" /></td>
     </tr>
 
     <tr>

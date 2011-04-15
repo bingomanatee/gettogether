@@ -1,5 +1,6 @@
 <h1>Members</h1>
 
+<?php if (FALSE !== $this->members) { ?>
 <table class="list">
     <tr>
         <th>Alias</th>
@@ -18,8 +19,10 @@
     </tr>
     <?php } ?>
 </table>
+<?php } ?>
 
-<?php   $ds = Zend_Registry::get('gt_session');
+<?php
+    $ds = Zend_Registry::get('gt_session');
     if (!$ds->member) { ?>
 <table class="layout" width="100%">
     <tr>

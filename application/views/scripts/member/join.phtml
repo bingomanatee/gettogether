@@ -1,6 +1,12 @@
+<?php if ($this->ticket){ ?>
+
+<?php echo $this->partial('forms/join.phtml'); ?>
+
+<?php } else { ?>
 <h1>Join GetTogether</h1>
 
 <?php echo $this->partial('forms/join.phtml'); ?>
 
 <p>Already a member?
     <a href="<?php echo $this->baseUrl(); ?>/member/signin">Sign In!</a></p>
+<?php }

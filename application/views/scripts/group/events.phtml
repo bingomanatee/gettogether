@@ -1,0 +1,38 @@
+<?php
+$now = date('m/d/Y');
+
+if (empty($this->ticket)) { ?>
+    <h1>Group&quot;<?php echo $this->group->name ?>&quot; Events</h1>
+<?php } ?>
+
+<table class="layout">
+    <tr>
+        <td><label><input type="radio" class="radio" name="event_filter" value="1" checked="checked" id="upcoming_events"
+                   onClick="$('#range').hide()"/>Upcoming Events</label></td>
+        <td>&nbsp;&nbsp;&nbsp;<label><input type="radio" class="radio"  name="event_filter" value="1" id="past_events"
+                                     onClick="$('#range').hide()"/>Past Events</label></td>
+        <td>&nbsp;&nbsp;&nbsp<label><input type="radio" class="radio"  name="event_filter" value="1" id="date_events"
+                                           onClick="$('#range').show()"/>Events on/between</label></td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right">
+            <span id="range" style="display: none">
+            <input type="checkbox" name="during_after" value="on" checked="checked" />From
+            <input name="during_after_date" id="during_after_date" style="width: 8em" value="<?php echo $now ?>"/>&nbsp;&nbsp;
+            <input type="checkbox" name="during_before" value="after" /> To
+            <input name="during_before_date" id="during_before_date" style="width: 8em" value="<?php echo $now ?>"/>
+            </span>
+        </td>
+    </tr>
+</table>
+<ol>
+    <li>Event 1</l1>
+    <li>Event 2</li>
+</ol>
+
+    <script>
+	$(function() {
+		$( "#during_after_date" ).datepicker();
+		$( "#during_before_date" ).datepicker();
+	});
+	</script>
