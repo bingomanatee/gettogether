@@ -1,0 +1,23 @@
+<?php if (!$this->ticket) { ?>
+<h1>Members of Group &quot;<a href="<?php
+ echo $this->baseUrl('/group/show/id/' . $this->group->id) ?>"><?php
+ echo $this->group->name ?></a>&quot;</h1>
+<?php } ?>
+<table class="list">
+
+    <tr>
+        <th>Name</th>
+        <th>Alias</th>
+        <th>Joined</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach($this->members as $member) {  ?>
+
+    <tr>
+        <td><?php echo $member['name'] ?></td>
+        <td><?php echo $member['alias'] ?></td>
+        <td><?php echo $member['joined_on'] ?></td>
+    </tr>
+    <?php } ?>
+
+</table>

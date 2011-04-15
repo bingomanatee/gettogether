@@ -1,0 +1,22 @@
+
+<form method="post" action="/group/join">
+<h2>Join Group &quot;<?php echo $this->group->name ?>&quot;</h2>
+<table>
+    
+    <tr>
+        <th><label>Accept Mail</label></th>
+        <td><input type="checkbox" name="join[accept_mail]" class="checkbox" />
+            By joining this group, you agree to recieve notification emails on upcoming events.</td>
+    </tr>
+
+    <?php if ($this->group_questions) echo $this->partial($this->group_questions); ?>
+
+    <tr>
+        <td colspan="2" style="text-align: center">
+            <input type="submit" class="button submit" value="Join This Group" /></td>
+    </tr>
+</table>
+<input type="hidden" name="join[group]" value="<?php echo $this->group->id ?>" />
+<input type="hidden" name="join[member]" value="<?php echo $this->member->id ?>" />
+<input type="hidden" name="id" value="<?php echo $this->group->id ?>" />
+</form>

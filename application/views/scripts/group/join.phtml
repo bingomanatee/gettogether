@@ -1,0 +1,15 @@
+<h1>Join Group &quot;<a href="<?php
+ echo $this->baseUrl('/group/show/id/' . $this->group->id) ?>"><?php
+ echo $this->group->name ?></a>&quot;</h1>
+
+<div id="inner">
+<?php
+echo ($this->partial('tickets/group.phtml',
+        array('group' => $this->group)));
+?>
+
+<?php
+echo ($this->partial('forms/join_group.phtml',
+        array('group' => $this->group, 'member' => $this->user)));
+?>
+</div>
