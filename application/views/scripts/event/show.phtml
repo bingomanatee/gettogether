@@ -1,6 +1,9 @@
 <?php
-if (empty($this->ticket)) {
-    echo '<h1>Event&quot;', $this->event->name, '&quot;</h1>';
+if (empty($this->ticket)) { ?><h1>Event&quot;<?php  
+ echo $this->event->name; ?> &quot; in group &quot;<a href="<?php
+ echo $this->baseUrl('/group/show/id/' . $this->group->id) ?>"><?php
+ echo $this->group->name ?></a>&quot;</h1>
+    <?php
 }
 ?>
 

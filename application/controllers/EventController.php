@@ -22,7 +22,10 @@ class EventController extends Zend_Controller_Action {
         }
 
         if ($id = $this->_getParam('id')){
-            $this->view->event = $this->_event_model->get($id);
+            $this->view->event = $event = $this->_event_model->get($id);
+            if ($event){
+                $this->view->group = $this->_group_model()->get($event->group);
+            }
         } else {
             $this->view->event = false;
         }
@@ -47,8 +50,10 @@ class EventController extends Zend_Controller_Action {
 
             $event_data = $this->_getParam('event');
             $date = strtotime($event_data['start_date']);
-            $event_data['start_date'] = date('y-m-d', $date) . 'T' . $event_data['start_time'];
+            $event_data['start_date'] = $date = date('Y-m-d', $date) . ' ' . str_replace(' ', '',  $event_data['start_time']);
             unset($event_data['start_time']);
+
+            error_log(__METHOD__ . ":: start date = $date ");
 
             $event = $this->_event_model->put($event_data);
 
