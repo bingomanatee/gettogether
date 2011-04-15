@@ -1,0 +1,22 @@
+<?php if (!$this->ticket) { ?>
+<h1>Events</h1>
+<?php } ?>
+<table class="list">
+
+    <tr>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>&nbsp;</th>
+    </tr>
+
+    <?php foreach($this->events as $event) { ?>
+    <tr>
+        <td><?php echo $event['name'] ?></td>
+        <td><?php echo $event['start_date'] ?></td>
+        <td class="button"
+            onClick="document.location='<?php echo $this->baseUrl('/event/show/id/' . $event->id) ?>'">
+        View</td>
+    </tr>
+    <?php } ?>
+
+</table>

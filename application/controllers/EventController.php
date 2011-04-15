@@ -46,6 +46,9 @@ class EventController extends Zend_Controller_Action {
          if ($this->getRequest()->isPost()) {
 
             $event_data = $this->_getParam('event');
+            $date = strtotime($event_data['start_date']);
+            $event_data['start_date'] = date('y-m-d', $date) . 'T' . $event_data['start_time'];
+            unset($event_data['start_time']);
 
             $event = $this->_event_model->put($event_data);
 
@@ -58,7 +61,7 @@ class EventController extends Zend_Controller_Action {
     }
 
     public function listAction(){
-        $this->view->events = $this->_event_model->find(array('sort' => 'start_date',  'where' => array('group' => $this->_getParam('group_id'))));
+        $this->view->events = $this->_event_model->find(array('sort' => 'start_date',  'where' => array('`group`' => $this->_getParam('group_id'))));
     }
 
     public function indexAction(){

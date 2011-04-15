@@ -7,8 +7,8 @@ if (empty($this->ticket)) {
     <div id="tabs">
         <ul>
             <li><a href="<?php echo $this->baseURL('/group/show/id/' . $this->group->id . '/ticket/1') ?>">Home</a></li>
-            <li><a href="<?php echo $this->baseURL('/group/events/id/' . $this->group->id . '/ticket/1') ?>">Events</a></li>
-            <li><a href="<?php echo $this->baseURL('/group/addevent/id/' . $this->group->id . '/ticket/1') ?>">Add Event</a></li>
+            <li><a href="<?php echo $this->baseURL('/event/list/group_id/' . $this->group->id . '/ticket/1') ?>">Events</a></li>
+            <li><a href="<?php echo $this->baseURL('/event/add/group_id/' . $this->group->id . '/ticket/1') ?>">Add Event</a></li>
             <li><a href="<?php echo $this->baseURL('/group/members/id/' . $this->group->id . '/ticket/1') ?>">Members</a></li>
         </ul>
     </div>

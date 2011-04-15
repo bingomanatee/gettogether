@@ -8,6 +8,7 @@ class Gettogether_Model_Group_Events extends Gettogether_Model_Abstract implemen
         $sql = <<<SQL
 CREATE TABLE  `events` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`group` INT NOT NULL,
 `name` VARCHAR( 200 ) NOT NULL ,
 `description` TEXT NOT NULL ,
 `status` INT NOT NULL ,

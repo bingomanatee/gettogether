@@ -1,11 +1,13 @@
-
+<?php
+$user = Zend_Registry::get('gt_session')->member;
+?>
 <navigation>
     <a href="/">Home</a>
     <?php
-    if ($this->user) {
+    if ($user) {
     ?>
-        <p>Logged in as <?php echo $this->user->alias ?></p>
-        <a href="<?php echo $this->baseUrl('/member/show/id/' . $this->user->id) ?>">My Account</a>
+        <p>Logged in as <?php echo $user->alias ?></p>
+        <a href="<?php echo $this->baseUrl('/member/show/id/' . $user->id) ?>">My Account</a>
         <a href="<?php echo $this->baseUrl(); ?>/member/signout">Log out</a>
     <?php } else {
     ?>

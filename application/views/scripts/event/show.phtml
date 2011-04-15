@@ -1,0 +1,9 @@
+<?php
+if (empty($this->ticket)) {
+    echo '<h1>Event&quot;', $this->event->name, '&quot;</h1>';
+}
+?>
+
+<?php
+
+echo $this->partial('tickets/event.phtml', array('event' => $this->event));
