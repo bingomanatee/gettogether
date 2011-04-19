@@ -41,49 +41,35 @@ class RoleController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost()) {
             $data = $this->_getParam('acl');
+            error_log(__METHOD__ . ': adding grant '. print_r($data, 1));
             extract($data);
-            error_log(__METHOD__ . ': data: ' . print_r($data, 1));
-            if ($role == '*') {
-                if ($task) {
-                    foreach ($this->_role_model->role_names(TRUE) as $role) {
-                        $grants_model->set_grant($role, $task, $can);
-                    }
-                }
-            } else if ($task == '*') {
-                foreach ($task_model->task_names() as $task) {
-                    $grants_model->set_grant($role, $task, $can);
-                }
-            } else {
-                $grants_model->set_grant($role, $task, $can);
-            }
+            $grants_model->set_grant($role, $task, $can);
             $this->_forward('acl');
         }
     }
 
     public function aclAction() {
-
         $grants_model = new Gettogether_Model_Grants();
         $task_model = new Gettogether_Model_Tasks();
         $this->view->scope = $scope = $this->_getParam('scope', 'site');
+        $this->view->scope = $scope_id = $this->_getParam('scope_id', 0);
 
-        $grants = $grants_model->find(array('scope' => $scope));
-        $this->view->roles = $roles = $this->_role_model->role_names(TRUE, 'site');
-        
+        $this->view->roles = $roles = $this->_role_model->role_names(TRUE, $scope);
         $this->view->tasks = $tasks = $task_model->task_names($scope);
 
+        $find = array('scope' => $scope, 'scope_id' => $scope_id);
+
+        $grants = $grants_model->find($find);
+
         $gr = array();
-        foreach ($roles as $role) {
-            $gr[$role] = array();
-            foreach ($tasks as $task){
-                $gr[$role][$task] = NULL;
-            }
+
+        foreach($roles as $role) foreach($tasks as $task){
+            $gr[$role][$task] = NULL;
         }
 
-        foreach ($grants as $grant) {
+        foreach($grants as $grant){
             $gr[$grant->role][$grant->task] = $grant->can;
         }
-
-        ksort($gr);
 
         $this->view->grants = $gr;
     }

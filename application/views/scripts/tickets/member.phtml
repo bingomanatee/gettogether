@@ -53,7 +53,7 @@ foreach ($roles as $scope => $id_role)
                 <?php
                 foreach ($cans as $task => $scope_id_role)
                 foreach ($scope_id_role as $scope => $id_role)
-                    foreach ($id_role as $scope_id => $can) {
+                    foreach ($id_role as $scope_id => $can) if ($can) {
  ?>
                         <tr>
                             <td><?php echo $task ?></td>

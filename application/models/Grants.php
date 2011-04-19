@@ -75,7 +75,9 @@ SQL;
 
         $old_grant = $this->find_one($find);
         if ($old_grant) {
-            error_log('found ' . print_r($old_grant->toArray(), 1));
+            error_log(__METHOD__ . 'found ' . print_r($old_grant->toArray(), 1));
+        } else {
+            error_log(__METHOD__ . ' no existing record for ' . print_r($find, 1));
         }
 
         switch ($can) {
@@ -160,15 +162,27 @@ SQL;
         $sql = 'select * from role_grants g INNER JOIN member_roles r on (g.role = r.role) AND (g.scope = r.scope) AND (g.scope_id = r.scope_id) WHERE r.member = ' . $pMember_id;
 
         foreach ($this->table()->getAdapter()->fetchAll($sql) as $grant) {
-            $this->_add_to_cache($pMember_id, $grant->task, $grant->scope, $grant->scope_id, $grant->can);
+            error_log(__METHOD__ . ': grant: ' . print_r($grant, 1));
+            $this->_add_to_cache($pMember_id, $grant['task'], $grant['scope'], $grant['scope_id'], $grant['can']);
         }
-        
     }
 
-    public function member_can($pMember_id = NULL, $pTask, $pScope = 'site', $pScope_id = 0) {
+    public static function active_member_can( $pTask, $pScope = 'site', $pScope_id = 0){
+        if ($user = Zend_Registry::get('user')){
+            $member = $user->id;
+        } else {
+            $member = 0;
+        }
 
-        if (!array_key_exists($pMember_id, self::$_member_can_cache))
-            $this->cache_member_cans($pMember_id);
+        return self::member_can($member, $pTask, $pScope, $pScope_id);
+    }
+
+    public static function member_can($pMember_id = NULL, $pTask, $pScope = 'site', $pScope_id = 0) {
+
+        if (!array_key_exists($pMember_id, self::$_member_can_cache)) {
+            $model = new self();
+            $model->cache_member_cans($pMember_id);
+        }
 
         $cache = self::$_member_can_cache[$pMember_id];
 
@@ -181,11 +195,11 @@ SQL;
         }
     }
 
-    public function member_cans_cache($pMember_id = NULL){
-        if (!array_key_exists($pMember_id, self::$_member_can_cache)){
+    public function member_cans_cache($pMember_id = NULL) {
+        if (!array_key_exists($pMember_id, self::$_member_can_cache)) {
             $this->cache_member_cans($pMember_id);
         }
-        
+
         return self::$_member_can_cache[$pMember_id];
     }
 

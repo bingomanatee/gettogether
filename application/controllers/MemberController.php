@@ -39,7 +39,7 @@ class MemberController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        if ($this->_member_role_model->active_member_can('view_members')) {
+        if (Gettogether_Model_Grants::active_member_can('view_members')) {
             $this->view->members = $this->_member_model->all(array('sort' => 'alias'));
         } else {
             $this->view->members = FALSE;
@@ -171,6 +171,15 @@ class MemberController extends Zend_Controller_Action {
     }
 
     public function addroleAction() {
+
+        if ($this->getRequest()->isPost()) {
+            $put = $this->_getParam('addrole');
+            error_log(__METHOD__ . ': add = ' . print_r($put, 1));
+            $member_role_model = new Gettogether_Model_Member_Roles();
+            $member_role_model->add_role($put['member'], $put['role'], $put['scope'], $put['scope_id']);
+            $params = array('id' => $put['member'], 'message' => 'Role Added');
+            $this->_forward('show', null, null, $params);
+        }
         $this->view->scope      = $scope    = $this->_getParam('scope', 'site');
         $this->view->scope_id   = $scope_id = $this->_getParam('scope_id', 0);
 

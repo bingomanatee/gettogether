@@ -35,9 +35,22 @@ SQL;
                 self::$_member_roles_cache[$pMember_id][$scope][0] = '';
             }
             foreach ($roles as $role) {
+                error_log(__METHOD__ . ":: roles: " . print_r($role->toArray(), 1));
+                
                 self::$_member_roles_cache[$pMember_id][$role->scope][$role->scope_id] = $role->role;
             }
         }
+    }
+
+    public function add_role($pMember, $pRole, $pScope = 'site', $pScope_id = 0){
+        $find = array('member' => $pMember, 'scope' => $pScope, 'scope_id' => $pScope_id, 'role' => $pRole);
+        error_log(__METHOD__ . ': find = ' . print_r($find, 1));
+
+        if ($old = $this->find_one($find)){
+            error_log('...exists');
+            return;
+        }
+        $this->put($find);
     }
 
     public function member_roles($pMember_id, $pScope = 'site', $pScope_id = 0) {
@@ -59,41 +72,5 @@ SQL;
         return self::$_member_roles_cache[$pMember_id];
     }
 
-    public function member_tasks($pMember_id, $pScope = 'site', $pScope_id = 0) {
-        $member_roles = $this->member_roles($pMember_id, $pScope, $pScope_id);
-
-        $grants_model = new Gettogether_Model_Grants();
-
-        $where = 'role in ("' . join('","', $member_roles) . '")';
-
-        error_log(__METHOD__ . ':: ' . $where);
-
-        $grant_list = $grants_model->table()->fetchAll($where);
-
-        error_log(print_r($grant_list->toArray(), 1));
-        $tasks = array();
-
-        /**
-         * first get all the default grants for all members
-         * then register the specific un-grants for specific roles.
-         * then register the positive grants ofr specific roles.
-         */
-        foreach ($grant_list as $grant)
-            if ($grant->role == '') {
-                $tasks[$grant->task] = $grant->can;
-            }
-
-        foreach ($grant_list as $grant)
-            if (($grant->role != '') && (!$grant->can)) {
-                $tasks[$grant->task] = $grant->can;
-            }
-
-        foreach ($grant_list as $grant)
-            if (($grant->role != '') && ($grant->can)) {
-                $tasks[$grant->task] = $grant->can;
-            }
-
-        return $tasks;
-    }
 
 }

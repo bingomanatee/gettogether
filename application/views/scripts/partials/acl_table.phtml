@@ -3,7 +3,7 @@ if (!($this->roles[0] == '')) {
     array_unshift($this->roles, '');
 }
 
-error_log(__FILE__ . ':: grants = ' . print_r($this->grants, 1));
+error_log(__FILE__ . ':: member grants = ' . print_r($this->grants['member'], 1));
 ?>
 <table class="list acl">
     <thead>
