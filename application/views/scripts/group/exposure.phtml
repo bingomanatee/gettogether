@@ -1,0 +1,16 @@
+<?php if (!$this->ticket) { ?>
+<h1>Exposure Settings</h1>
+<?php } ?>
+<div id="inner">
+<p>Note - these actions are "scripts" that adjust the grants
+    to effect the exposure of this group.</p>
+
+<dl>
+<?php foreach($this->settings as $setting){ ?>
+    <dt><a href="/group/exposure/id/<?php
+    echo $this->group->id ?>/name/<?php echo $setting->name ?>">
+            <?php echo $setting->label ?></a></dt>
+    <dd> <?php echo $setting->description ?></dd>
+<?php } ?>
+</dl>
+</div>

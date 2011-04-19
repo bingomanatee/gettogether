@@ -1,4 +1,6 @@
-
+<?php
+$user =(Object) (empty($this->user) ? Zend_Registry::get('user') : $this->user);
+?>
 <form method="post" action="/group/join">
 <h2>Join Group &quot;<?php echo $this->group->name ?>&quot;</h2>
 <table>
@@ -17,6 +19,6 @@
     </tr>
 </table>
 <input type="hidden" name="join[group]" value="<?php echo $this->group->id ?>" />
-<input type="hidden" name="join[member]" value="<?php echo $this->member->id ?>" />
+<input type="hidden" name="join[member]" value="<?php echo $user->id ?>" />
 <input type="hidden" name="id" value="<?php echo $this->group->id ?>" />
 </form>

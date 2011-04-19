@@ -6,6 +6,12 @@ class MemberController extends Zend_Controller_Action {
      * @var Gettogether_Model_Members
      */
     private $_member_model;
+
+    /**
+     *
+     * @var Zend_Db_Table_Row
+     */
+    private $_member;
     /**
      *
      * @var Gettogether_Model_Member_Roles
@@ -26,6 +32,10 @@ class MemberController extends Zend_Controller_Action {
         $this->view->section_nav = array();
 
         $this->view->section_nav['Grants'] = '/role';
+
+        if ($id = $this->_getParam('id')) {
+            $this->view->member = $this->_member = $this->_member_model->get($id);
+        }
     }
 
     public function indexAction() {
@@ -80,7 +90,7 @@ class MemberController extends Zend_Controller_Action {
             $auth->setCredential($data['password']);
             $test = $auth->authenticate();
             if ($test->isValid()) {
-                $this->_session->member = (Object) $auth->getResultRowObject();
+                $this->_session->member = $this->_session->user = (Object) $auth->getResultRowObject();
 
                 $this->_forward('index', 'index', null, array('message' => 'Logged in'));
             } else {
@@ -151,12 +161,19 @@ class MemberController extends Zend_Controller_Action {
 
     public function signoutAction() {
         unset($this->_session->member);
+        unset($this->_session->user);
 
         $this->_forward('index', null, null, array('message' => 'Logged Out'));
     }
 
     public function showAction() {
-        $this->view->member = $this->_member_model->get($this->_getParam('id'));
+
+    }
+
+    public function addroleAction() {
+        $this->view->scope      = $scope    = $this->_getParam('scope', 'site');
+        $this->view->scope_id   = $scope_id = $this->_getParam('scope_id', 0);
+
     }
 
 }

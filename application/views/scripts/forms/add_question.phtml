@@ -1,0 +1,51 @@
+<?php
+    switch($this->scope){
+        case 'group':
+            $title = 'Add Question for New Members';
+            break;
+
+        case 'event':
+            $title = 'Add Question for Event Participants';
+            break;
+    }
+?>
+
+<form method="post" action="/<?php echo $this->scope ?>/addquestion ">
+    <h2><?php echo $title ?></h2>
+    <table>
+        <tr>
+            <th><label>Question</label></th>
+            <td><textarea name="question[question]"><?php
+            echo empty($this->question) ? '' : $this->question ?></textarea></td>
+        </tr>
+        <tr>
+            <th colspan="2"><h3>Choices</h3>
+                <p><small>You do not HAVE to provide choices to choose from
+                    but if you want to channel the user to choose one of many options
+                    provide a list of choices.</p>
+                    begin each choice with a ? mark on a new line</small></p></th>
+        </tr>
+        <tr>
+            <th><label>Answers</label></th>
+            <td><textarea rows="10" cols="50"
+                          name="question[answer]"><?php echo empty($this->answer) ? '' : $this->amswer ?></textarea></td>
+        </tr>   
+        <tr>
+            <th><label>Response Type</label></th>
+            <td><select name="question[type]">
+                    <option value="text">Text (1 line)</option>
+                    <option value="textarea">Textarea (multiline) </option>
+                    <option value="date">Date/Time</option>
+                    <option value="radio">Radio Button (Choose One) </option>
+                    <option value="checkbox">Checkbox (Choose one or more) </option>
+                                   </select></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align: center"><input type="submit"
+                       class="button submit"  value="Add Event" /></td>
+        </tr>
+    </table>
+    <input type="hidden" name="question[scope]" value="<?php echo $this->scope ?>" />
+    <input type="hidden" name="question[scope_id]" value="<?php echo $this->scope_id ?>" />
+</form>

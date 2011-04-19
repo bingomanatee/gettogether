@@ -93,19 +93,41 @@ abstract class Gettogether_Model_Abstract implements Gettogether_Model_IF {
         $select = $this->table()->select();
 
         $this->_add_wheres($select, $pCrit);
-        $this->_add_sort($select, $pCrit);
-        $this->_add_limit($select, $pCrit);
+        if (array_key_exists('sort', $pCrit)) {
+            $this->_add_sort($select, $pCrit);
+        }
+        if (array_key_exists('limit', $pCrit)) {
+            $this->_add_limit($select, $pCrit);
+        }
+        if (array_key_exists('columns', $pCrit)){
+            $this->_add_columns($select, $pCrit);
+        }
+
 
         return $this->table()->fetchAll($select);
     }
 
     public function all(array $pCrit = array()) {
         $select = $this->table()->select();
-        
-        $this->_add_sort($select, $pCrit);
-        $this->_add_limit($select, $pCrit);
+
+        if (array_key_exists('sort', $pCrit)) {
+            $this->_add_sort($select, $pCrit);
+        }
+        if (array_key_exists('limit', $pCrit)) {
+            $this->_add_limit($select, $pCrit);
+        }
+        if (array_key_exists('columns', $pCrit)){
+            $this->_add_columns($select, $pCrit);
+        }
 
         return $this->table()->fetchAll($select);
+    }
+
+
+    private function _add_columns(Zend_Db_Table_Select $select, $pCrit) {
+        if (array_key_exists('columns', $pCrit)) {
+            $select->from($this->table_name ,$pCrit['columns']);
+        }
     }
 
     private function _add_sort(Zend_Db_Table_Select $select, $pCrit) {
@@ -117,7 +139,7 @@ abstract class Gettogether_Model_Abstract implements Gettogether_Model_IF {
     private function _add_limit(Zend_Db_Table_Select $select, $pCrit) {
         if (array_key_exists('limit', $pCrit)) {
             if (array_key_exists('offset', $pCrit)) {
-                $select->limit( $pCrit['limit'], $pCrit['offset']);
+                $select->limit($pCrit['limit'], $pCrit['offset']);
             } else {
                 $select->limit($pCrit['limit']);
             }
@@ -140,7 +162,7 @@ abstract class Gettogether_Model_Abstract implements Gettogether_Model_IF {
 
     public function find_one(array $pCrit) {
         $rowset = $this->find($pCrit);
-      //  error_log(__METHOD__ . ':: result: ' . print_r($rowset, 1));
+        //  error_log(__METHOD__ . ':: result: ' . print_r($rowset, 1));
         return $rowset->current();
     }
 

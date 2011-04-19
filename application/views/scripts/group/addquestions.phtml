@@ -1,0 +1,14 @@
+<?php
+if (!$this->ticket) {
+        ?>
+
+<h1>Join Questions</h1>
+
+<p>These questions will be asked of any new members to your group. </p>
+ <?php } ?>
+<?php
+echo $this->partial('partials/questions.phtml', array('scope' => 'group',
+    'group' => $this->group, 'questions' => $this->questions));
+
+echo $this->partial('forms/add_question.phtml', array('scope' => 'group',
+    'group' => $this->group));

@@ -1,0 +1,11 @@
+<?php if (!$this->ticket) { ?>
+<div id="acl_table">
+<?php } ?>
+<?php echo $this->partial('partials/acl_table.phtml', array('roles' => $this->roles,
+    'tasks' => $this->tasks, 'grants' => $this->grants )) ?>
+    <p>These grants are specific to THIS group. Colored letter settings on grey background
+        indicate settings that are global to ALL groups and are carried through by extension
+        to your group until you manually set them by clicking on them.</p>
+<?php if (!$this->ticket) { ?>
+</div>
+<?php } ?>

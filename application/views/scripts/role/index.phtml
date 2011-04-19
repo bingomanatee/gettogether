@@ -16,7 +16,9 @@
         
     function acl_update(role, task, can){
         $.post( '<?php echo $this->baseUrl('/role/grant') ?>',
-        {acl: {role: role, task: task, can: can}, ticket: 1}
-        , function(table){$('#ui-tabs-3').html(table)} )
+        {acl: {role: role, task: task, can: can, 
+                scope: '<?php echo $this->scope?>', 
+                scope_id: '<?php echo (int) $this->scope_id ?>'}, ticket: 1}, 
+        function(table){$('#ui-tabs-3').html(table)} )
     }
 </script>

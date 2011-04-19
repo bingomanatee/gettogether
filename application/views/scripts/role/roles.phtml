@@ -2,9 +2,16 @@
 <h1>Roles</h1>
 <?php } ?>
 
+<div id="inner">
+<?php foreach($this->roles as $scope => $roles) { ?>
+<h2><?php echo ucwords($scope) ?></h2>
 <dl>
-    <?php foreach($this->roles as $role){ ?>
+    <?php foreach($roles as $role){ ?>
     <dt><?php echo $role->role ?></dt>
     <dd><?php echo $role->label ?></dd>
     <?php } ?>
 </dl>
+<?php
+
+} ?>
+</div>

@@ -21,16 +21,19 @@
 </table>
 <?php } ?>
 
+<?php if ($this->user) {
+         echo $this->partial('tickets/member.phtml', array('member' => $this->user));
+} else { ?>
+    <div id="tabs">
+        <ul>
+            <li><a href="<?php echo $this->baseURL('/member/signin/ticket/1') ?>">Sign In</a></li>
+            <li><a href="<?php echo $this->baseURL('/member/join/ticket/1') ?>">Join Us</a></li>
+        </ul>
+    </div>
+<script language="javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>
 <?php
-    $ds = Zend_Registry::get('gt_session');
-    if (!$ds->member) { ?>
-<table class="layout" width="100%">
-    <tr>
-        <td width="50%"><?php echo $this->partial('forms/signin.phtml'); ?></td>
-        <td width="50%"><?php echo $this->partial('forms/join.phtml') ?></td>
-    </tr>
-</table>
-<?php
-    } else {
-        echo $this->partial('tickets/member.phtml', array('member' => $ds->member));
-    }
+    } 

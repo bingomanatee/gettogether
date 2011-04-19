@@ -1,20 +1,5 @@
 <?php if (!$this->ticket) { ?>
 <h1>Groups</h1>
 <?php } ?>
-<table class="list">
 
-    <tr>
-        <th>Name</th>
-        <th>&nbsp;</th>
-    </tr>
-    <?php foreach($this->groups as $group) { ?>
-
-    <tr>
-        <td><?php echo $group['name'] ?></td>
-        <td class="button"
-            onClick="document.location='<?php echo $this->baseUrl('/group/show/id/' . $group->id) ?>'">
-        View</td>
-    </tr>
-    <?php } ?>
-
-</table>
+<?php echo $this->partial('lists/groups.phtml', array('groups' => $this->groups)); 

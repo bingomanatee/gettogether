@@ -1,0 +1,155 @@
+<?php
+if (!($this->roles[0] == '')) {
+    array_unshift($this->roles, '');
+}
+
+error_log(__FILE__ . ':: grants = ' . print_r($this->grants, 1));
+?>
+<table class="list acl">
+    <thead>
+        <tr><th>&nbsp;</th>
+            <th colspan="<?php echo count($this->roles) ?>">Roles</th>
+        </tr>
+        <tr>
+            <th><i>Tasks</i></th>
+            <?php foreach ($this->roles as $role) {
+            ?>
+                <th><?php echo $role ? $role : 'default' ?></th>
+            <?php } ?>
+        </tr>
+    </thead>
+
+    <?php
+            $last_context = '';
+            foreach ($this->tasks as $task) {
+                $context = array_pop(explode(' ', $task));
+    ?>
+
+    <?php if ($last_context != $context) {
+ ?>
+
+                    <tr><th>&nbsp;</th>
+                        <th colspan="<?php echo count($this->roles) ?>"><h3>
+<?php echo ucwords($context); ?>
+
+                </h3></th>
+        </tr>
+    <?php
+                    $last_context = $context;
+                }
+    ?>
+                <tr>
+                    <th><?php echo $task ?></th>
+
+        <?php foreach ($this->roles as $role) {
+        ?>
+        <?php
+                    $can = array_key_exists($role, $this->grants) && array_key_exists($task, $this->grants[$role]) ? $this->grants[$role][$task] : NULL;
+                    if (is_array($can)) {
+                        list($can, $can_default) = $can;
+                    } else {
+                        $can_default = NULL;
+                    }
+
+                    switch ($can) {
+                        case NULL:
+                            switch ($can_default) {
+                                case 1:
+                                    $label = '<span style="color: green">Yes</span>';
+                                    break;
+
+                                case 0:
+                                    $label = '<span style="color: red">No</span>';
+                                    break;
+
+                                default:
+                                    $label = '???';
+                            } // end default switch;
+                            break; // end can(NULL) switch;
+
+                        case 1:
+                            $label = 'Yes';
+                            break;
+
+                        case 0:
+                            $label = 'No';
+                            break;
+                    }
+
+
+                    switch ($can) {
+
+                        case NULL:
+                            echo '<td class="null" ';
+                            if (empty($this->readonly))
+                                echo ' onClick="acl_update(\'', $role, '\', \'', $task, '\',\'yes\')';
+                            echo '">', $label, '</td>', "\n";
+                            break;
+
+                        case 1:
+                            echo '<td class="yes" ';
+                            if (empty($this->readonly))
+                                echo ' onClick="acl_update(\'', $role, '\', \'', $task, '\',\'no\')';
+                            echo '">', $label, '</td>', "\n";
+                            break;
+
+                        case 0:
+                            echo '<td class="no" ';
+                            if (empty($this->readonly))
+                                echo ' onClick="acl_update(\'', $role, '\', \'', $task, '\',\'delete\')';
+                            echo '">', $label, '</td>', "\n";
+                            break;
+                    }
+        ?>
+<?php } ?>
+                <td class="yes" style="width: 2em" <?php if (empty($this->readonly))
+                    echo ' onClick="acl_update(\'*\', \'', $task, '\',\'yes\')"' ?>
+                        >Y</td>
+                    <td class="no"  style="width: 2em" <?php if (empty($this->readonly))
+                        echo ' onClick="acl_update(\'*\', \'', $task, '\',\'no\')"' ?>>N</td>
+                    <td class="null" style="width: 2em"  <?php if (empty($this->readonly))
+                            echo ' onClick="acl_update(\'*\', \'', $task, '\',\'delete\')"' ?>>?</td>
+                    </tr>
+<?php } ?>
+                        <tr><th>&nbsp;</th>
+        <?php foreach ($this->roles as $role) {
+        ?>
+        <?php
+                            echo '<td class="yes" ';
+                            if (empty($this->readonly))
+                                echo ' onClick="acl_update(\'', $role, '\', \'', '*', '\',\'yes\')';
+                            echo '">Yes</td>', "\n";
+        ?>
+<?php } ?>
+                    </tr>
+
+                    <tr><th>&nbsp;</th>
+        <?php foreach ($this->roles as $role) {
+        ?>
+        <?php
+                            echo '<td class="no" ';
+                            if (empty($this->readonly))
+                                echo ' onClick="acl_update(\'', $role, '\', \'', '*', '\',\'no\')';
+                            echo '">No</td>', "\n";
+        ?>
+<?php } ?>
+                    </tr>
+
+                    <tr><th>&nbsp;</th>
+        <?php foreach ($this->roles as $role) {
+ ?>
+        <?php
+                            echo '<td class="null" ';
+                            if (empty($this->readonly))
+                                echo ' onClick="acl_update(\'', $role, '\', \'', '*', '\',\'delete\')';
+                            echo '">???</td>', "\n";
+        ?>
+<?php } ?>
+                    </tr>
+
+                </table>
+<?php
+                        /**
+                         * Note - the javascript function acl_update has to be defined externally to this display
+                         * unless you want this as a "read only" script.
+                         */

@@ -265,14 +265,23 @@ table.acl {
     font-size: 80%;
     -moz-border-radius: 0.25em;
     -webkit-border-radius: 0.25em;
+    background-color: black;
 }
 
+table.acl h3 {
+    margin: 0px;
+    font-size: 120%;
+    color: rgb(200, 200, 200);
+}
 table.acl thead th {
     -moz-border-radius: 0.25em;
     -webkit-border-radius: 0.25em;
     text-align: center;
     background-color: black;
     color: rgb(200, 200, 200);
+    width: 4em;
+    font-size: 100%;
+    font-weight: normal;
 }
 
 table.acl th,
@@ -289,22 +298,18 @@ table.acl td {
 table.acl th {
     color: white;
     text-align: left;
+    width: 10em;
+    font-size: 90%;
 }
 
 table.acl td.yes {
-    background-color: green;
+    background-color: rgb(0, 220, 0);
 }
 table.acl td.no {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
 }
 table.acl td.null {
-    background-color: grey;
-}
-
-table.acl {
-    background-color: black;
-    -moz-border-radius: 1.5em;
-    -webkit-border-radius: 1.5em;
+    background-color: rgb(80, 80, 80);
 }
 
 

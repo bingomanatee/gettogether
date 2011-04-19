@@ -1,8 +1,7 @@
 <?php
-if (empty($this->ticket)) {
-    echo '<h1>Group&quot;', $this->group->name, '&quot;</h1>';
-?>
-    
+if (empty($this->ticket)) { ?>
+    <h1>Group&quot;<?php
+    echo $this->group->name; ?>&quot;</h1>
 
     <div id="tabs">
         <ul>
@@ -10,6 +9,7 @@ if (empty($this->ticket)) {
             <li><a href="<?php echo $this->baseURL('/event/list/group_id/' . $this->group->id . '/ticket/1') ?>">Events</a></li>
             <li><a href="<?php echo $this->baseURL('/event/add/group_id/' . $this->group->id . '/ticket/1') ?>">Add Event</a></li>
             <li><a href="<?php echo $this->baseURL('/group/members/id/' . $this->group->id . '/ticket/1') ?>">Members</a></li>
+            <li><a href="<?php echo $this->baseURL('/group/settings/id/' . $this->group->id . '/ticket/1') ?>">Settings</a></li>
         </ul>
     </div>
 
@@ -19,15 +19,30 @@ if (empty($this->ticket)) {
 <?php
 } else { ?>
 <div id="inner">
+    <?php if ($this->user) { ?>
 <p><a href="<?php echo $this->baseUrl('/group/join/id/' . $this->group->id) ?>"
       class="button submit">Join this group!</a></p>
-</div>
+<?php } else { ?>
+
+<p><a href="<?php echo $this->baseUrl('/member/') ?>"
+      class="button submit">Sign Up/Log In</a> if you want to join this group</p>
 <?php } ?>
+<?php } ?>
+</div>
       
     <script language="javascript">
         $(function() {
             $( "#tabs" ).tabs();
         });
+        
+        
+    function acl_update(role, task, can){
+        $.post( '<?php echo $this->baseUrl('/group/grant') ?>',
+        {acl: {role: role, task: task, can: can,
+                scope: 'group',
+                scope_id: '<?php echo (int) $this->group->id ?>'}, ticket: 1},
+        function(table){$('#permissions').html(table)} )
+    }
     </script>
 <?php
 } else {

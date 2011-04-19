@@ -1,0 +1,17 @@
+<?php
+
+$params = array('member' => $this->member, 'scope' => $this->scope, 'scope_id' => $this->scope_id);
+
+if ($this->ticket){ ?>
+
+<?php echo $this->partial('forms/add_member_role.phtml', $params); ?>
+
+<?php } else { ?>
+    <h1>Add Role For Member &quot;<?php echo $this->member->name ?>&quot;
+        (<?php echo $this->member->alias ?>)</h1>
+
+<?php echo $this->partial('forms/add_member_role.phtml', $params); ?>
+
+<p>Already a member?
+    <a href="<?php echo $this->baseUrl(); ?>/member/signin">Sign In!</a></p>
+<?php }

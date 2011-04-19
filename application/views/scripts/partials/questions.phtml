@@ -1,0 +1,8 @@
+<h2>Questions</h2>
+
+<dl>
+    <?php foreach($this->questions as $q) { ?>
+    <dt><?php echo $q['question'] ?></dt>
+    <dd><pre><?php echo $q['answer'] ?></pre></dd>
+    <?php } ?>
+</dl>

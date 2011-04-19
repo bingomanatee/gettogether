@@ -11,9 +11,12 @@ class RoleController extends Zend_Controller_Action {
      */
     protected $_role_model = null;
 
+    protected $_scope = 'site';
+
     public function init() {
         $this->_member_role_model = new Gettogether_Model_Member_Roles();
         $this->_role_model = new Gettogether_Model_Roles();
+        $this->view->scope = $this->_scope = $this->_getParam('scope', 'site');
     }
 
     public function indexAction() {
@@ -21,12 +24,15 @@ class RoleController extends Zend_Controller_Action {
     }
 
     public function rolesAction(){
-        $this->view->roles = $this->_role_model->all();
+        $this->view->roles = array();
+        $this->view->roles['site'] = $this->_role_model->find(array('scope' => 'site', 'scope_id' => 0));
+        $this->view->roles['group'] = $this->_role_model->find(array('scope' => 'group', 'scope_id' => 0));
+        $this->view->roles['event'] = $this->_role_model->find(array('scope' => 'event', 'scope_id' => 0));
     }
 
     public function tasksAction(){
         $task_model = new Gettogether_Model_Tasks();
-        $this->view->tasks = $task_model->all();
+        $this->view->tasks = $task_model->find(array('scope' => 'site'));
     }
 
     public function grantAction() {
@@ -58,11 +64,12 @@ class RoleController extends Zend_Controller_Action {
 
         $grants_model = new Gettogether_Model_Grants();
         $task_model = new Gettogether_Model_Tasks();
+        $this->view->scope = $scope = $this->_getParam('scope', 'site');
 
-        $grants = $grants_model->all(array('sort' => array('role', 'task')));
-
-        $this->view->roles = $roles = $this->_role_model->role_names(TRUE);
-        $this->view->tasks = $tasks = $task_model->task_names();
+        $grants = $grants_model->find(array('scope' => $scope));
+        $this->view->roles = $roles = $this->_role_model->role_names(TRUE, 'site');
+        
+        $this->view->tasks = $tasks = $task_model->task_names($scope);
 
         $gr = array();
         foreach ($roles as $role) {

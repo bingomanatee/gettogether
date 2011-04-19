@@ -1,0 +1,31 @@
+<?php
+
+$role_model = new Gettogether_Model_Roles();
+$roles = $role_model->role_names(FALSE, $this->scope, $this->scope_id);
+
+?>
+
+<form method="post" action="/acl/add" style="width: 40em">
+<h2>Add Role to member &quot;<?php echo $this->member->name ?>&quot; (<?php echo $this->member->alias ?>)</h2>
+<p>Scope: <?php echo $this->scope ?>:<?php echo $this->scope_id ?></p>
+<input type="hidden" name="member" value="<?php echo $member->id ?>" />
+<input type="hidden" name="scope" value="<?php echo $this->scope ?>" />
+<input type="hidden" name="scope_id" value="<?php echo $this->scope_id ?>" />
+<table>
+    <tr>
+        <th><label>Role</label></th>
+        <td><select name="role[role]">
+                <option value="">Select Role</option>
+                <?php foreach($roles as $role){ ?>
+                <option value="<?php echo $role ?>"><?php echo $role->role ?></option>
+                <?php } ?>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" style="text-align: center"><input type="submit"
+        class="button submit"  value="Add Role to Member" /></td>
+    </tr>
+</table>
+</form>

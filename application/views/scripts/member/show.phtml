@@ -1,5 +1,25 @@
-<h1>Member &quot;<?php echo $this->member->name ?>&quot;
-    (<?php echo $this->member->alias ?>)</h1>
-
 <?php
-        echo $this->partial('tickets/member.phtml', array('member' => $this->member));
+if ($this->ticket) {
+
+    echo $this->partial('tickets/member.phtml', array('member' => $this->member));
+} else {
+?>
+
+    <h1>Member &quot;<?php echo $this->member->name ?>&quot;
+        (<?php echo $this->member->alias ?>)</h1>
+
+    <div id="tabs">
+        <ul>
+            <li><a href="<?php echo $this->baseURL('/member/show/ticket/1/id/' . $this->member->id) ?>">Member</a></li>
+            <li><a href="<?php echo $this->baseURL('/member/add_role/ticket/1/id/' . $this->member->id) ?>">Add Role</a></li>
+        </ul>
+    </div>
+
+    <script language="javascript">
+        $(function() {
+            $( "#tabs" ).tabs();
+        });
+
+    </script>
+<?php
+}

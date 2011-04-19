@@ -1,8 +1,11 @@
 <?php
-$role = new Gettogether_Model_Member_Roles();
+$role_model = new Gettogether_Model_Member_Roles();
 
-$actions = $role->member_actions($this->member->id);
+$roles = $role_model->member_roles_cache($this->member->id);
 
+$grants_model = new Gettogether_Model_Grants();
+
+$cans = $grants_model->member_cans_cache($this->member->id);
 ?>
 <table class="ticket">
     <tr>
@@ -19,8 +22,47 @@ $actions = $role->member_actions($this->member->id);
     </tr>
 
     <tr>
-        <th>Actions</th>
-        <td><?php  echo join(', ', array_keys($actions)) ?>
+        <th>Roles</th>
+        <td>
+            <table>
+                <tr><th colspan="2">Scope</th><th>Role</th></tr>
+
+<?php
+foreach ($roles as $scope => $id_role)
+    foreach ($id_role as $scope_id => $role) {
+ ?>
+                <tr>
+                    <td><?php echo $scope ?></td>
+                    <td><?php echo $scope_id ?></td>
+                    <td><?php echo $role ?></td>
+                </tr>
+                <?php } ?>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th>Tasks</th>
+        <td>
+            <table>
+                <tr>
+                    <th>Task</th>
+                    <th colspan="2">Scope</th>
+                    <th>grant</th>
+                </tr>
+
+                <?php
+                foreach ($cans as $task => $scope_id_role)
+                foreach ($scope_id_role as $scope => $id_role)
+                    foreach ($id_role as $scope_id => $can) {
+ ?>
+                        <tr>
+                            <td><?php echo $task ?></td>
+                            <td><?php echo $scope ?></td>
+                            <td><?php echo $scope_id ?></td>
+                            <td><?php echo $can ? 'YES' : 'NO' ?></td>
+                        </tr>
+                <?php } ?>
+            </table>
         </td>
     </tr>
 </table>

@@ -1,0 +1,25 @@
+<?php if (!$this->ticket) { ?>
+
+
+    <script language="javascript">
+
+
+    function acl_update(role, task, can){
+        $.post( '<?php echo $this->baseUrl('/group/defaultgrant') ?>',
+        {acl: {role: role, task: task, can: can,
+                scope: 'group',
+                scope_id: 0}, ticket: 1},
+        function(table){$('#acl_table').html(table)} )
+    }
+    </script>
+
+<h1>Default Grants for NEW Groups.</h1>
+<div id="acl_table">
+<?php } ?>
+<?php echo $this->partial('partials/acl_table.phtml', array('roles' => $this->roles,
+    'tasks' => $this->tasks, 'grants' => $this->grants )) ?>
+    <p>These grants will be applied to all NEW groups. They will not be applied
+    retroactively to all existing groups. </p>
+<?php if (!$this->ticket) { ?>
+</div>
+<?php } ?>

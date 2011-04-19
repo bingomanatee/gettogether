@@ -6,6 +6,7 @@
         <li><a href="<?php echo $this->baseURL('/group/my/ticket/1') ?>">My Groups</a></li>
         <li><a href="<?php echo $this->baseURL('/group/local/ticket/1') ?>">Local Groups</a></li>
         <li><a href="<?php echo $this->baseURL('/group/add/ticket/1') ?>">Add Group</a></li>
+        <li><a href="<?php echo $this->baseURL('/group/defaultacl/ticket/1') ?>">New Group Grants</a></li>
     </ul>
 </div>
 
@@ -13,5 +14,18 @@
     $(function() {
         $( "#tabs" ).tabs();
     });
-
 </script>
+
+    <script language="javascript">
+        $(function() {
+            $( "#tabs" ).tabs();
+        });
+
+
+    function acl_update(role, task, can){
+        $.post( '<?php echo $this->baseUrl('/group/defaultgrant') ?>',
+        {acl: {role: role, task: task, can: can,
+                scope: 'group'}, ticket: 1},
+        function(table){$('#ui-tabs-5').html(table)} )
+    }
+    </script>

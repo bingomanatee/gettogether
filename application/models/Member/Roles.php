@@ -15,38 +15,63 @@ class Gettogether_Model_Member_Roles extends Gettogether_Model_Abstract implemen
 CREATE TABLE  `member_roles` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `member` INT NOT NULL ,
-`role` VARCHAR( 100 ) NOT NULL
+`role` VARCHAR( 100 ) NOT NULL,
+  `scope` varchar(20) NOT NULL DEFAULT 'site',
+  `scope_id` int NOT NULL DEFAULT 0
 ) ENGINE = MYISAM;
 SQL;
         $this->table()->getAdapter()->query($sql);
     }
 
-    public function member_roles($id) {
-        $roles = $this->find(array('id' => $id));
+    private static $_member_roles_cache = array();
 
-        $member_roles = array('');
-        foreach ($roles as $role) {
-            $member_roles[] = $role->role;
+    private function _cache_member_roles($pMember_id, $pForce = FALSE) {
+        if ($pForce || !array_key_exists($pMember_id, self::$_member_roles_cache)) {
+            unset(self::$_member_roles_cache[$pMember_id]);
+
+            $roles = $this->find(array('member' => $pMember_id));
+
+            foreach(array('site', 'group') as $scope){
+                self::$_member_roles_cache[$pMember_id][$scope][0] = '';
+            }
+            foreach ($roles as $role) {
+                self::$_member_roles_cache[$pMember_id][$role->scope][$role->scope_id] = $role->role;
+            }
         }
-
-        $member_roles = array_unique($member_roles);
-
-        return $member_roles;
     }
 
-    public function member_actions($id) {
-        $member_roles = $this->member_roles($id);
+    public function member_roles($pMember_id, $pScope = 'site', $pScope_id = 0) {
+        if (!array_key_exists($pMember_id, self::$_member_roles_cache)) {
+            $this->_cache_member_roles($pMember_id);
+        }
+
+        if (array_key_exists($pScope, self::$_member_roles_cache) && array_key_exists($pScope_id, self::$_member_roles_cache[$pScope])) {
+            return self::$_member_roles_cache[$pMember_id][$pScope][$pScope_id];
+        } else {
+            return array();
+        }
+    }
+
+    public function member_roles_cache($pMember_id) {
+        if (!array_key_exists($pMember_id, self::$_member_roles_cache)) {
+            $this->_cache_member_roles($pMember_id);
+        }
+        return self::$_member_roles_cache[$pMember_id];
+    }
+
+    public function member_tasks($pMember_id, $pScope = 'site', $pScope_id = 0) {
+        $member_roles = $this->member_roles($pMember_id, $pScope, $pScope_id);
 
         $grants_model = new Gettogether_Model_Grants();
 
         $where = 'role in ("' . join('","', $member_roles) . '")';
 
         error_log(__METHOD__ . ':: ' . $where);
-        
+
         $grant_list = $grants_model->table()->fetchAll($where);
 
         error_log(print_r($grant_list->toArray(), 1));
-        $actions = array();
+        $tasks = array();
 
         /**
          * first get all the default grants for all members
@@ -55,41 +80,20 @@ SQL;
          */
         foreach ($grant_list as $grant)
             if ($grant->role == '') {
-                $actions[$grant->action] = $grant->can;
+                $tasks[$grant->task] = $grant->can;
             }
 
         foreach ($grant_list as $grant)
             if (($grant->role != '') && (!$grant->can)) {
-                $actions[$grant->action] = $grant->can;
+                $tasks[$grant->task] = $grant->can;
             }
 
         foreach ($grant_list as $grant)
             if (($grant->role != '') && ($grant->can)) {
-                $actions[$grant->action] = $grant->can;
+                $tasks[$grant->task] = $grant->can;
             }
 
-        return $actions;
-    }
-
-    public function member_can($id, $action) {
-        return $actions = $this->member_actions($id);
-        if (array_key_exists($action, $actions)) {
-            return $actions[$action];
-        } else {
-            return false;
-        }
-    }
-
-    public function active_member_can($action) {
-        $ds = Zend_Registry::get('gt_session');
-        if ($member = $ds->member) {
-            $id = $member->id;
-            return $this->member_can($id, $action);
-        } else {
-            $grants_model = new Gettogether_Model_Grants();
-            $actions = $grants_model->role_actions('');
-            return array_key_exists($action, $actions) ? $actions[$action] : false;
-        }
+        return $tasks;
     }
 
 }

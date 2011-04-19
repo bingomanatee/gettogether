@@ -1,0 +1,29 @@
+<table class="list">
+
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>City</th>
+        <th>State</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach( $this->groups as $group) {
+        if (is_object($group)){
+            $group = $group->toArray();
+        }
+            error_log('list group = ' . print_r($group, 1));
+        ?>
+
+
+    <tr>
+        <td><?php echo $group['name'] ?></td>
+        <td><?php echo $group['description'] ?></td>
+        <td><?php echo $group['city'] ?></td>
+        <td><?php echo $group['state'] ?></td>
+        <td class="button"
+            onClick="document.location='<?php echo $this->baseUrl('/group/show/id/' . $group['id']) ?>'">
+        View</td>
+    </tr>
+    <?php } ?>
+
+</table>
